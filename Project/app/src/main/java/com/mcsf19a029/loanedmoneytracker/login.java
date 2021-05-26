@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class login extends AppCompatActivity {
 
@@ -22,14 +24,13 @@ public class login extends AppCompatActivity {
     }
 
     public void homePage(View view) {
-        EditText user = (EditText) findViewById(R.id.username);
+        EditText user = findViewById(R.id.username);
         EditText pass = (EditText) findViewById(R.id.password);
         Intent intent = new Intent(this, homepage.class);
-        if (user.getText().toString() == "Zeeshan") {
+        if(user.getText().toString().equals("Zeeshan") & pass.getText().toString().equals("123"))
             startActivity(intent);
-        }
-
-        startActivity(intent);
+        else
+            Toast.makeText(getApplicationContext(),"Wrong Credentials",Toast.LENGTH_SHORT).show();
     }
     public void login(View view)
     {

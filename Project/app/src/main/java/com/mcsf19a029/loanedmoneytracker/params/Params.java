@@ -10,5 +10,6 @@ public class Params {
     public static final String KEY_USER_NAME = "userName";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PHONE = "phoneNo";
+    public static final String KEY_PASSWORD = "password";
 
 }
