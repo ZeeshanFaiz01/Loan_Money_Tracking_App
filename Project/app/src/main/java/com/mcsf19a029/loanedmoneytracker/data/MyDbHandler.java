@@ -3,7 +3,9 @@ package com.mcsf19a029.loanedmoneytracker.data;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.mcsf19a029.loanedmoneytracker.model.LoanedMT;
 import com.mcsf19a029.loanedmoneytracker.params.Params;
@@ -17,12 +19,14 @@ public class MyDbHandler extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String create = "CREATE TABLE" + Params.TABLE_NAME + "("
-                + Params.KEY_ID + "INTEGER PRIMARY KEY,"
-                + Params.KEY_USER_NAME + "TEXT,"
-                + Params.KEY_EMAIL + "TEXT,"
-                + Params.KEY_PHONE + "TEXT"
-                + Params.KEY_PASSWORD + "TEXT" + ")";
+        String create = "CREATE TABLE " + Params.TABLE_NAME + "("
+                + Params.KEY_ID + " INTEGER PRIMARY KEY,"
+                + Params.KEY_USER_NAME + " TEXT, "
+                + Params.KEY_EMAIL + " TEXT, "
+                + Params.KEY_PHONE + " TEXT, "
+                + Params.KEY_PASSWORD + " TEXT" + ")";
+        Log.d("database","created");
+        db.execSQL(create);
 
     }
 
@@ -40,7 +44,7 @@ public class MyDbHandler extends SQLiteOpenHelper {
         values.put(Params.KEY_EMAIL,loanedMT.getEmail());
         values.put(Params.KEY_PHONE,loanedMT.getPhone());
         values.put(Params.KEY_PASSWORD,loanedMT.getPass());
-        db.insert(Params.TABLE_NAME,null,values);
+        db.insert(Params.TABLE_NAME, null, values);
         db.close();
     }
 }

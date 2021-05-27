@@ -67,6 +67,19 @@
         app:layout_constraintTop_toBottomOf="@+id/searchView2" />
 
     <Button
+        android:id="@+id/addnew"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/mybutton"
+        android:text="Add Record"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView2"
+        android:onClick="addRecord"
+        ></Button>
+
+    <Button
         android:id="@+id/aSearch"
         android:layout_width="140dp"
         android:layout_height="50dp"
