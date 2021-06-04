@@ -54,7 +54,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
+        android:id="@+id/recycler"
         android:layout_width="346dp"
         android:layout_height="455dp"
         android:layout_marginStart="5dp"
@@ -70,14 +70,13 @@
         android:id="@+id/addnew"
         android:layout_width="140dp"
         android:layout_height="50dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/mybutton"
+        android:onClick="addRecord"
         android:text="Add Record"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView2"
-        android:onClick="addRecord"
-        ></Button>
+        app:layout_constraintTop_toBottomOf="@+id/recycler"></Button>
 
     <Button
         android:id="@+id/aSearch"
@@ -89,7 +88,6 @@
         android:background="@drawable/mybutton"
         android:drawableLeft="@drawable/cash"
         android:text="Home"
-        android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +105,6 @@
         android:background="@drawable/mybutton"
         android:drawableLeft="@drawable/account"
         android:text="Account"
-        android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
