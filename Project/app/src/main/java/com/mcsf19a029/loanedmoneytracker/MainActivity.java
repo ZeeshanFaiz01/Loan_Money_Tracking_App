@@ -11,7 +11,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
-
     Timer timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
