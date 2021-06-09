@@ -80,7 +80,8 @@ public class MyDbHandler extends SQLiteOpenHelper {
 
     public void signUp(LoanedMT loanedMT)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+     try{
+         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(Params.KEY_USER_NAME,loanedMT.getName());
@@ -89,32 +90,61 @@ public class MyDbHandler extends SQLiteOpenHelper {
         values.put(Params.KEY_PASSWORD,loanedMT.getPass());
         db.insert(Params.TABLE_NAME, null, values);
         db.close();
+        }
+        catch (Exception e)
+        {
+             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
     public void AccRecord(AccountRecord accRec){
-        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(Params.KEY_ID,accRec.getId());
-        values.put(Params.KEY_NAME,accRec.getName());
-        values.put(Params.KEY_CONTACT,accRec.getContact());
-        db.insert(Params.ACC_TABLE,null,values);
-        db.close();
+            ContentValues values = new ContentValues();
+            values.put(Params.KEY_NAME,accRec.getName());
+            values.put(Params.KEY_CONTACT,accRec.getContact());
+            long res = db.insert(Params.ACC_TABLE,null,values);
+            if(res == 0)
+            {
+                Toast.makeText(context, "Data Added Successfully", Toast.LENGTH_SHORT).show();
+                db.close();
+            }
+            else
+                Toast.makeText(context, "Fails To Add Data", Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
     }
     public void AddRecord(Record record){
-        SQLiteDatabase db = this.getWritableDatabase();
-        Bitmap imgToStore = record.getImg();
-        byteArrayOutputStream = new ByteArrayOutputStream();
-        imgToStore.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
-        imgToByte = byteArrayOutputStream.toByteArray();
-        ContentValues values = new ContentValues();
-        values.put(Params.KEY_ID,record.getId());
-        values.put(Params.KEY_ACC_ID,record.getAccID());
-        values.put(Params.KEY_DESCRIPTION,record.getDescription());
-        values.put(Params.KEY_CURRENCY,record.getCurrency());
-        values.put(Params.KEY_IMG_NAME,record.getImgName());
-        values.put(Params.KEY_IMG,imgToByte);
-        db.insert(Params.REC_TABLE,null,values);
-        db.close();
+        try
+        {
+            SQLiteDatabase db = this.getWritableDatabase();
+            Bitmap imgToStore = record.getImg();
+            byteArrayOutputStream = new ByteArrayOutputStream();
+            imgToStore.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+            imgToByte = byteArrayOutputStream.toByteArray();
+            ContentValues values = new ContentValues();
+            values.put(Params.KEY_ACC_ID,record.getAccID());
+            values.put(Params.KEY_DESCRIPTION,record.getDescription());
+            values.put(Params.KEY_CURRENCY,record.getCurrency());
+            values.put(Params.KEY_IMG_NAME,record.getImgName());
+            values.put(Params.KEY_IMG,imgToByte);
+            long res = db.insert(Params.REC_TABLE,null,values);
+            if(res == 0)
+            {
+                Toast.makeText(context, "Data Added Successfully", Toast.LENGTH_SHORT).show();
+                db.close();
+            }
+            else
+                Toast.makeText(context, "Fails To Add Data", Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
 
     }
 }
