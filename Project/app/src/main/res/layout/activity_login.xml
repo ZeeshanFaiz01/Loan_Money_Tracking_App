@@ -30,7 +30,7 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/login"
+        android:id="@+id/login1"
         android:layout_width="127dp"
         android:layout_height="65dp"
         android:layout_marginStart="73dp"
@@ -43,7 +43,6 @@
         android:gravity="center"
         android:padding="15dp"
         android:text="Login"
-        android:onClick="homePage"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"

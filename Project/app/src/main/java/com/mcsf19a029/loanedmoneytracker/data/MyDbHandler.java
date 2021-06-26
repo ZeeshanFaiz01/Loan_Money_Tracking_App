@@ -2,6 +2,7 @@ package com.mcsf19a029.loanedmoneytracker.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -21,9 +22,11 @@ public class MyDbHandler extends SQLiteOpenHelper {
     Context context;
     private ByteArrayOutputStream byteArrayOutputStream;
     private byte[] imgToByte;
-    public MyDbHandler(Context context){
+
+    public MyDbHandler(Context context) {
         super(context, Params.DB_NAME, null, Params.DB_VERSION);
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String create = "CREATE TABLE " + Params.TABLE_NAME + "("
@@ -43,33 +46,33 @@ public class MyDbHandler extends SQLiteOpenHelper {
                 + Params.KEY_IMG_NAME + " TEXT,"
                 + Params.KEY_CURRENCY + " DECIMAL,"
                 + Params.KEY_IMG + " BLOB)";
-        try
-        {
-           db.execSQL(AccRec);
-            Toast.makeText(context, "AccRec Table Created Successfully", Toast.LENGTH_SHORT).show();
-        }
-        catch (Exception e)
-        {
-           Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        try
-        {
-            db.execSQL(Rec);
-            Toast.makeText(context, "Records Table Created Successfully", Toast.LENGTH_SHORT).show();
-        }
-        catch (Exception e)
-        {
-           Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        try
-        {
-            db.execSQL(create);
-            Toast.makeText(context, "User Table Created Successfully", Toast.LENGTH_SHORT).show();
-        }
-       catch (Exception e)
-       {
-           Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-       }
+//        try
+//        {
+        db.execSQL(AccRec);
+//            Toast.makeText(context, "AccRec Table Created Successfully", Toast.LENGTH_SHORT).show();
+//        }
+//        catch (Exception e)
+//        {
+//           Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+//        }
+//        try
+//        {
+        db.execSQL(Rec);
+//            Toast.makeText(context, "Records Table Created Successfully", Toast.LENGTH_SHORT).show();
+//        }
+//        catch (Exception e)
+//        {
+//           Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+//        }
+//        try
+//        {
+        db.execSQL(create);
+//            Toast.makeText(context, "User Table Created Successfully", Toast.LENGTH_SHORT).show();
+//        }
+//       catch (Exception e)
+//       {
+//           Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+//       }
 
     }
 
@@ -78,73 +81,95 @@ public class MyDbHandler extends SQLiteOpenHelper {
 
     }
 
-    public void signUp(LoanedMT loanedMT)
-    {
-     try{
-         SQLiteDatabase db = this.getWritableDatabase();
+    public Boolean checkUsernamePassword(String username, String password) {
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        Cursor cursor = myDB.rawQuery("select * from " + Params.TABLE_NAME + " where username =? and password=?", new String[]{username, password});
+        if (cursor.getCount() > 0) return true;
+        else
+            return false;
+    }
+
+    public boolean signUp(LoanedMT loanedMT) {
+//     try{
+        SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(Params.KEY_USER_NAME,loanedMT.getName());
-        values.put(Params.KEY_EMAIL,loanedMT.getEmail());
-        values.put(Params.KEY_PHONE,loanedMT.getPhone());
-        values.put(Params.KEY_PASSWORD,loanedMT.getPass());
-        db.insert(Params.TABLE_NAME, null, values);
+        values.put(Params.KEY_USER_NAME, loanedMT.getName());
+        values.put(Params.KEY_EMAIL, loanedMT.getEmail());
+        values.put(Params.KEY_PHONE, loanedMT.getPhone());
+        values.put(Params.KEY_PASSWORD, loanedMT.getPass());
+        long res = db.insert(Params.TABLE_NAME, null, values);
+        if (res == -1)
+            return false;
+        else
+            return true;
+
+//        if(res==-1)
+//        {
+//            Toast.makeText(context, "Signup Not successfull", Toast.LENGTH_SHORT).show();
+//        }
+//        else
+//            Toast.makeText(context, "Signup Successfull", Toast.LENGTH_SHORT).show();
+//        db.close();
+//        }
+//        catch (Exception e)
+//        {
+//             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+//        }
+    }
+
+    public boolean AccRecord(AccountRecord accRec) {
+//        try {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Params.KEY_NAME, accRec.getName());
+        values.put(Params.KEY_CONTACT, accRec.getContact());
+        long res = db.insert(Params.ACC_TABLE, null, values);
         db.close();
-        }
-        catch (Exception e)
-        {
-             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-    public void AccRecord(AccountRecord accRec){
-        try {
-            SQLiteDatabase db = this.getWritableDatabase();
+        if (res == -1)
+            return false;
+        else
+            return true;
+//                Toast.makeText(context, "Data Added Successfully", Toast.LENGTH_SHORT).show();
 
-            ContentValues values = new ContentValues();
-            values.put(Params.KEY_NAME,accRec.getName());
-            values.put(Params.KEY_CONTACT,accRec.getContact());
-            long res = db.insert(Params.ACC_TABLE,null,values);
-            if(res == 0)
-            {
-                Toast.makeText(context, "Data Added Successfully", Toast.LENGTH_SHORT).show();
-                db.close();
-            }
-            else
-                Toast.makeText(context, "Fails To Add Data", Toast.LENGTH_SHORT).show();
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+//        }
+//        catch (Exception e)
+//        {
+//            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+//        }
 
     }
-    public void AddRecord(Record record){
-        try
-        {
-            SQLiteDatabase db = this.getWritableDatabase();
-            Bitmap imgToStore = record.getImg();
-            byteArrayOutputStream = new ByteArrayOutputStream();
-            imgToStore.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
-            imgToByte = byteArrayOutputStream.toByteArray();
-            ContentValues values = new ContentValues();
-            values.put(Params.KEY_ACC_ID,record.getAccID());
-            values.put(Params.KEY_DESCRIPTION,record.getDescription());
-            values.put(Params.KEY_CURRENCY,record.getCurrency());
-            values.put(Params.KEY_IMG_NAME,record.getImgName());
-            values.put(Params.KEY_IMG,imgToByte);
-            long res = db.insert(Params.REC_TABLE,null,values);
-            if(res == 0)
-            {
-                Toast.makeText(context, "Data Added Successfully", Toast.LENGTH_SHORT).show();
-                db.close();
-            }
-            else
-                Toast.makeText(context, "Fails To Add Data", Toast.LENGTH_SHORT).show();
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
 
+    public boolean AddRecord(Record record) {
+//        try
+//        {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Bitmap imgToStore = record.getImg();
+        byteArrayOutputStream = new ByteArrayOutputStream();
+        imgToStore.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        imgToByte = byteArrayOutputStream.toByteArray();
+        ContentValues values = new ContentValues();
+        values.put(Params.KEY_ACC_ID, record.getAccID());
+        values.put(Params.KEY_DESCRIPTION, record.getDescription());
+        values.put(Params.KEY_CURRENCY, record.getCurrency());
+        values.put(Params.KEY_IMG_NAME, record.getImgName());
+        values.put(Params.KEY_IMG, imgToByte);
+        long res = db.insert(Params.REC_TABLE, null, values);
+        db.close();
+        if (res == -1)
+            return false;
+        else
+            return true;
+//                Toast.makeText(context, "Fails To Add Data", Toast.LENGTH_SHORT).show();
+//            }
+//            else
+//                Toast.makeText(context, "Data Added Successfully", Toast.LENGTH_SHORT).show();
+//            db.close();
+//        }
+//        catch (Exception e)
+//        {
+//            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+//        }
+//    }
     }
 }
