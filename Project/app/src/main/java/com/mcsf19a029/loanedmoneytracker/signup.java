@@ -33,10 +33,13 @@ public class signup extends AppCompatActivity {
         pass = findViewById(R.id.pass);
         phone = findViewById(R.id.number);
         LoanedMT loanedMT = new LoanedMT(user.getText().toString(),mail.getText().toString(),phone.getText().toString(),pass.getText().toString());
-        db.signUp(loanedMT);
-        Toast.makeText(getApplicationContext(),"Sign-up Successful",Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this,login.class);
-        startActivity(intent);
-
+        boolean flag = db.signUp(loanedMT);
+        if(flag==true) {
+            Toast.makeText(getApplicationContext(), "Sign-up Successful", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, login.class);
+            startActivity(intent);
+        }else{
+            Toast.makeText(getApplicationContext(), "Sign-up Un-Successful", Toast.LENGTH_SHORT).show();
+        }
     }
 }
