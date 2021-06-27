@@ -28,20 +28,19 @@ public class signup extends AppCompatActivity {
     }
     public void signUp(View view){
         EditText mail,user,pass,phone;
-
-        pass = findViewById(R.id.pass);
-        phone = findViewById(R.id.number);
         mail = findViewById(R.id.mail);
         user = findViewById(R.id.user);
+        pass = findViewById(R.id.pass);
+        phone = findViewById(R.id.number);
         LoanedMT loanedMT = new LoanedMT(user.getText().toString(),mail.getText().toString(),phone.getText().toString(),pass.getText().toString());
         boolean flag = db.signUp(loanedMT);
         if(flag==true) {
-            Toast.makeText(getApplicationContext(), "Sign-up Successful", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Sign-up Successfully", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, login.class);
             startActivity(intent);
         }
-//        else{
-//            Toast.makeText(getApplicationContext(), "Sign-up Un-Successful", Toast.LENGTH_SHORT).show();
-//        }
+        else{
+            Toast.makeText(getApplicationContext(), "Sign-up Un-Successfully", Toast.LENGTH_SHORT).show();
+      }
     }
 }

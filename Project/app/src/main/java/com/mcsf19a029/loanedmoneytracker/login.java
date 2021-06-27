@@ -33,7 +33,7 @@ public class login extends AppCompatActivity {
                 String passs = pass.getText().toString();
 
                 if (userr.equals("") || passs.equals(""))
-                    Toast.makeText(login.this, "Please Enter All the Fields", Toast.LENGTH_LONG).show();
+                    Toast.makeText(login.this, "Please enter all the fields", Toast.LENGTH_LONG).show();
                 else{
                     Boolean checkUserPassword= DB.checkUsernamePassword(userr,passs);
                     if(checkUserPassword==true){
