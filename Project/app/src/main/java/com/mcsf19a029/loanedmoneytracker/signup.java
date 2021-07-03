@@ -40,7 +40,7 @@ public class signup extends AppCompatActivity {
             startActivity(intent);
         }
         else{
-            Toast.makeText(getApplicationContext(), "Sign-up Un-Successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Sign up UnSuccessfully", Toast.LENGTH_SHORT).show();
       }
     }
 }
