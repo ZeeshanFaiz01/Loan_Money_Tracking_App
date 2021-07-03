@@ -1,4 +1,4 @@
-package com.mcsf19a029.loanedmoneytracker;
+  package com.mcsf19a029.loanedmoneytracker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,7 +40,7 @@ public class signup extends AppCompatActivity {
             startActivity(intent);
         }
         else{
-            Toast.makeText(getApplicationContext(), "Sign up UnSuccessfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Sign-up UnSuccessfully", Toast.LENGTH_SHORT).show();
       }
     }
 }
